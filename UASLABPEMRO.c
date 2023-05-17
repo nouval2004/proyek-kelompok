@@ -137,6 +137,44 @@ int main()
       exit(1);
     }  
   }
+ char usernameinput[20], passwordinput[20];
+    strcpy(usernameinput, argv[1]);
+    strcpy(passwordinput, argv[2]);
+
+    FILE *fpr;
+    if ((fpr = fopen("database/login.bin", "rb")) == NULL)
+    {
+        printf("Couldn't open database");
+        return 0;
+    }
+    char akun[20];
+    fread(akun, sizeof(akun), sizeof(akun) / sizeof(char), fpr);
+    fclose(fpr);
+
+    char *string[3];
+    char username[20], password[20];
+    int ctrl = 0;
+
+    string[0] = strtok(akun, "@");
+    while (string[ctrl++] != NULL)
+    {
+        string[ctrl] = strtok(NULL, "@");
+    }
+
+    strcpy(username, string[0]);
+    strcpy(password, string[1]);
+
+    if (strcmp(usernameinput, username) == 0 && strcmp(passwordinput, password) == 0)
+    {
+        play_game();
+    }
+    else
+    {
+        printf("Username dan password anda salah");
+    }
+
+    return 0;
+}
 
  
 
